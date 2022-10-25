@@ -1,0 +1,18 @@
+import requests
+city ="Moscow,RU"
+appid ="22d812d7434cea3f252ce315da82d690"
+res = requests.get("http://api.openweathermap.org/data/2.5/weather",
+                   params={'q': city,'units':'metric','lang':'ru','APPID': appid})
+data = res.json()
+
+print("Скорость ветра:", data['wind']['speed'])
+print("Видимость ветра", data['visibility'])
+
+
+res = requests.get("http://api.openweathermap.org/data/2.5/forecast",
+                  params={'q': city,'units':'metric','lang':'ru','APPID': appid})
+data = res.json()
+print("Прогноз погоды на неделю:")
+for i in data['list']:
+    print("Дата <", i['dt_txt'],
+          '{0:+3.0f}'.format(i['wind']['speed']),"> \r\nВидимость ветра <",i['visibility'],">")
